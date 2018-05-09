@@ -72,3 +72,6 @@ projects[panopoly_test][subdir] = panopoly
 projects[panopoly_test][download][type] = git
 projects[panopoly_test][download][revision] = 300155b
 projects[panopoly_test][download][branch] = 7.x-1.x
+
+; Adding patches:
+projects[panopoly_test][patch][] = https://www.drupal.org/files/issues/2018-05-09/panopoly_test-iframe-ajax-2971200-3.patch
