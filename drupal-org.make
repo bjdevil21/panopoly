@@ -72,6 +72,3 @@ projects[panopoly_test][subdir] = panopoly
 projects[panopoly_test][download][type] = git
 projects[panopoly_test][download][revision] = 9009d3f
 projects[panopoly_test][download][branch] = 7.x-1.x
-
-; Adding patches:
-projects[panopoly_widgets][patch][] = https://www.drupal.org/files/issues/2018-05-28/panopoly_widgets-spotlight-next-prev-2975934-2.patch
