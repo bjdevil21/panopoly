@@ -72,3 +72,6 @@ projects[panopoly_test][subdir] = panopoly
 projects[panopoly_test][download][type] = git
 projects[panopoly_test][download][revision] = 8f7485b
 projects[panopoly_test][download][branch] = 7.x-1.x
+
+; Adding patches:
+projects[panopoly_core][patch][] = https://www.drupal.org/files/issues/2018-10-18/panopoly_core-panels-breadcrumb-php7-compat-2948753-4.patch
