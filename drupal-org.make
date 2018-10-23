@@ -72,3 +72,6 @@ projects[panopoly_test][subdir] = panopoly
 projects[panopoly_test][download][type] = git
 projects[panopoly_test][download][revision] = 8f7485b
 projects[panopoly_test][download][branch] = 7.x-1.x
+
+; Adding patches:
+projects[panopoly_admin][patch][] = https://www.drupal.org/files/issues/panopoly_admin-admin-menu-php7-compatibility-2948454.patch
