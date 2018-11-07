@@ -72,3 +72,6 @@ projects[panopoly_test][subdir] = panopoly
 projects[panopoly_test][download][type] = git
 projects[panopoly_test][download][revision] = 8f7485b
 projects[panopoly_test][download][branch] = 7.x-1.x
+
+; Adding patches:
+projects[panopoly_widgets][patch][] = https://www.drupal.org/files/issues/2018-11-06/panopoly_widgets-file_entity-update-3011886-2.patch
