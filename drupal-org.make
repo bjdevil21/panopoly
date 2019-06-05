@@ -72,3 +72,6 @@ projects[panopoly_test][subdir] = panopoly
 projects[panopoly_test][download][type] = git
 projects[panopoly_test][download][revision] = b600c33
 projects[panopoly_test][download][branch] = 7.x-1.x
+
+; Adding patches:
+projects[panopoly_widgets][patch][] = https://www.drupal.org/files/issues/2019-05-08/panopoly_widgets-update_to_media_youtube-7.x-3.8-3053322-2.patch
