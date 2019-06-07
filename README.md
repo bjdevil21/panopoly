@@ -66,3 +66,5 @@ We use Travis-CI.org to run automated tests after every commit.
 [![Build Status](https://travis-ci.org/panopoly/panopoly.svg?branch=7.x-1.x)](http://travis-ci.org/panopoly/panopoly)
 
 @see https://www.drupal.org/node/2271009
+
+Here's a change to the profile
