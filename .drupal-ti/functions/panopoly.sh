@@ -57,6 +57,7 @@ function panopoly_build_distribution() {
 	composer config repositories.panopoly path ../panopoly
 	composer install
 	composer require drupal/diff 'drupal/drupal-extension:^3.2.2'
+	cd web
 	mkdir -p sites/default/private/files
 	mkdir -p sites/default/private/temp
 
