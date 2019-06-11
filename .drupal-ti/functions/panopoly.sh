@@ -55,7 +55,7 @@ function panopoly_build_distribution() {
 	composer create-project panopoly/panopoly-composer-template:8.x-dev drupal --no-interaction --no-install
 	cd drupal
 	composer config repositories.panopoly path ../panopoly
-	composer require drupal/diff 'drupal/drupal-extension:^3.2.2' --no-install
+	composer require drupal/diff 'drupal/drupal-extension:^3.2.2' --no-update
 	composer install
 	mkdir -p sites/default/private/files
 	mkdir -p sites/default/private/temp
