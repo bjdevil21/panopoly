@@ -118,9 +118,9 @@ function drupal_ti_install_drupal() {
 	panopoly_header Installing Drupal
 	if [[ "$UPGRADE" == none ]]
 	then
-		cd drupal
+		cd drupal/web
 	else
-		cd panopoly-$UPGRADE
+		cd panopoly-$UPGRADE/web
 		# Relax checks as drush site-install has errors for update 1.13.
 		set +e
 	fi
@@ -130,7 +130,7 @@ function drupal_ti_install_drupal() {
 	#drush vset -y file_temporary_path "sites/default/private/temp"
 
 	# Switch to the Panopoly platform built from Git (if we aren't there already).
-	cd ../drupal
+	cd ../../drupal/web
 
 	# If we're an upgrade test, run the upgrade process.
 	if [[ "$UPGRADE" != none ]]
