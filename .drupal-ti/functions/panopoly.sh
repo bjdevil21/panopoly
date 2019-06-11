@@ -56,7 +56,7 @@ function panopoly_build_distribution() {
 	cd drupal
 	composer config repositories.panopoly path ../panopoly
 	composer require drupal/diff 'drupal/drupal-extension:^3.2.2' --no-update
-	php -d memory_limit=2G $(which composer) install
+	php -d memory_limit=3G $(which composer) install
 	mkdir -p sites/default/private/files
 	mkdir -p sites/default/private/temp
 
