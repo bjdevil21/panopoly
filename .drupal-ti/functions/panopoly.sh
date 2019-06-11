@@ -51,17 +51,12 @@ function panopoly_build_distribution() {
 	cd "$DRUPAL_TI_DRUPAL_BASE"
 
 	# Build Codebase
-	mkdir profiles
-	mv panopoly profiles/
-	mkdir drupal
-	mv profiles drupal/
-
-	# Build the current branch.
-	panopoly_header Building Panopoly from current branch
+	panopoly_header Building Panopoly with Composer template
+	composer create-project panopoly/panopoly-composer-template:8.x-dev drupal --no-interaction --no-install
 	cd drupal
-	drush make --yes profiles/panopoly/drupal-org-core.make --prepare-install
-	drush make --yes profiles/panopoly/drupal-org.make --no-core --contrib-destination=profiles/panopoly
-	drush dl diff
+	composer config repositories.panopoly path ../panopoly
+	composer require drupal/diff 'drupal/drupal-extension:^3.2.2' --no-install
+	composer install
 	mkdir -p sites/default/private/files
 	mkdir -p sites/default/private/temp
 
