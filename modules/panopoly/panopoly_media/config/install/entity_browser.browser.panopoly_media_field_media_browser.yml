@@ -2,10 +2,11 @@ langcode: en
 status: true
 dependencies:
   config:
-    - media.type.image
+    - media.type.panopoly_media_image
     - views.view.media_entity_browser
   module:
     - dropzonejs_eb_widget
+    - entity_browser_entity_form
     - media
     - panopoly_media
     - views
@@ -13,9 +14,9 @@ name: panopoly_media_field_media_browser
 label: 'Panopoly Media Field Browser'
 display: modal
 display_configuration:
-  width: '650'
-  height: '500'
-  link_text: Browse
+  width: ''
+  height: ''
+  link_text: 'Browse media'
   auto_open: false
 selection_display: no_display
 selection_display_configuration: {  }
@@ -35,18 +36,18 @@ widgets:
   ee8606e5-1b38-4c5d-9cc3-e71ae053cb4e:
     settings:
       extensions: 'txt rtf doc docx ppt pptx xls xlsx pdf odf odg odp ods odt fodt fods fodp fodg key numbers pages'
-      media_type: file
+      media_type: panopoly_media_file
       upload_location: 'public://upload/[date:custom:Y]-[date:custom:m]'
       multiple: '1'
       submit_text: Select
     uuid: ee8606e5-1b38-4c5d-9cc3-e71ae053cb4e
-    weight: -7
+    weight: -8
     label: 'Upload files'
     id: panopoly_media_file_upload
   a36a243c-e298-4b28-9eb2-4a9976879176:
     settings:
       form_mode: entity_browser
-      media_type: image
+      media_type: panopoly_media_image
       upload_location: 'public://upload/[date:custom:Y]-[date:custom:m]'
       dropzone_description: 'Drop files here to upload them'
       max_filesize: 10M
@@ -59,6 +60,16 @@ widgets:
       thumbnail_method: contain
       submit_text: Select
     uuid: a36a243c-e298-4b28-9eb2-4a9976879176
-    weight: -8
+    weight: -7
     label: 'Upload images'
     id: dropzonejs_media_entity_inline_entity_form
+  15474089-1e4d-48bb-8917-4af94990132a:
+    settings:
+      entity_type: media
+      bundle: panopoly_media_remote_video
+      form_mode: entity_browser
+      submit_text: Select
+    uuid: 15474089-1e4d-48bb-8917-4af94990132a
+    weight: 5
+    label: 'Add remote video'
+    id: entity_form
