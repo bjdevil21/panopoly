@@ -638,12 +638,16 @@ EOF;
 
     $collection->addTask($this->checkoutManyreposForRelease($branch, $opts['clean']));
 
-    // Update all the CHANGELOG.txt files in the monorepo.
+    // Update all the CHANGELOG.txt files in the monorepo (except for
+    // panopoly_demo, which needs to get updated in its own repo).
     foreach ($this->getPanopolyFeaturesNames() as $panopoly_feature => $panopoly_feature_name) {
       $panopoly_feature_release_path = "release/{$panopoly_feature}";
       $panopoly_feature_source_path = "modules/panopoly/{$panopoly_feature}";
 
-      // @todo [D7] We need to handle panopoly_demo special!
+      // For panopoly_demo, this needs to be updated in its separate repo.
+      if ($panopoly_feature === 'panopoly_demo') {
+        $panopoly_feature_source_path = $panopoly_feature_release_path;
+      }
 
       // @todo Probably should be a custom Task
       $collection->addCode(function () use ($old_version, $new_version, $branch, $panopoly_feature_name, $panopoly_feature_release_path, $panopoly_feature_source_path) {
@@ -665,6 +669,9 @@ EOF;
       ->add("CHANGELOG.txt");
 
     // Commit the CHANGELOG.txt changes, and tag everything.
+    $collection->taskExecStack()
+      ->exec("git -C release/panopoly_demo commit -m '{$commit_message}'")
+      ->exec("git -C release/panopoly_demo tag {$new_version}");
     $collection->taskGitStack()
       ->commit($commit_message)
       ->tag($new_version);
@@ -707,10 +714,16 @@ EOF;
     $collection->addTask($this->checkoutManyreposForRelease($branch));
     foreach ($this->getPanopolyFeatures() as $panopoly_feature) {
       $panopoly_feature_release_path = "release/{$panopoly_feature}";
-      // @todo [D7] We need to handle panopoly_demo special!
-      $collection->taskExecStack()
-        ->exec("git -C {$panopoly_feature_release_path} tag {$new_version}")
-        ->exec("git -C {$panopoly_feature_release_path} push --tags");
+      if ($panopoly_feature === 'panopoly_demo') {
+        $collection->taskExecStack()
+          ->exec("git -C {$panopoly_feature_release_path} push")
+          ->exec("git -C {$panopoly_feature_release_path} push --tags");
+      }
+      else {
+        $collection->taskExecStack()
+          ->exec("git -C {$panopoly_feature_release_path} tag {$new_version}")
+          ->exec("git -C {$panopoly_feature_release_path} push --tags");
+      }
     }
 
     return $collection;
