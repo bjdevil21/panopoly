@@ -230,7 +230,7 @@ class RoboFile extends RoboTasks {
 
       $this->say("Checking <info>{$panopoly_feature}</info>...");
       $process = $this->runDrush("features-diff {$panopoly_feature}");
-      if ($process->getExitCode() != 0 || strpos($process->getOutput(), "Feature is in its default state") === FALSE) {
+      if ($process->getExitCode() != 0 || strpos($process->getErrorOutput(), "Feature is in its default state") === FALSE) {
         $this->say("*** <error>OVERRIDDEN</error> ***");
         echo $process->getOutput() . $process->getErrorOutput();
         $overridden = TRUE;
