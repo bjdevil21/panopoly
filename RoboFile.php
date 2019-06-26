@@ -291,8 +291,6 @@ EOF;
     unset($panopoly_features_names['panopoly_demo']);
     $panopoly_features = array_keys($panopoly_features_names);
 
-    // @todo [D7] need to treat panopoly_demo special
-
     foreach ($panopoly_features as $panopoly_feature) {
       $collection->addCode(function () use ($panopoly_feature) {
         $this->say("Fetching from individual repo for {$panopoly_feature}...");
@@ -655,8 +653,13 @@ EOF;
         $this->updateChangelog("{$panopoly_feature_source_path}/CHANGELOG.txt", $panopoly_feature_name, $new_version, $drush_rn);
       });
 
-      $collection->taskGitStack()
-        ->add("{$panopoly_feature_source_path}/CHANGELOG.txt");
+      if ($panopoly_feature === 'panopoly_demo') {
+        $collection->taskExec("git -C {$panopoly_feature_release_path} add CHANGELOG.txt");
+      }
+      else {
+        $collection->taskGitStack()
+          ->add("{$panopoly_feature_source_path}/CHANGELOG.txt");
+      }
     }
 
     // Do top-level CHANGELOG.txt too.
