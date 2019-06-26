@@ -11,18 +11,19 @@ use Symfony\Component\Process\Process;
  */
 class RoboFile extends RoboTasks {
 
-  const PANOPOLY_DEFAULT_BRANCH = '8.x-2.x';
+  const PANOPOLY_DEFAULT_BRANCH = '7.x-1.x';
 
   const DRUPAL_ORG_API_NODE_URL = 'https://www.drupal.org/api-d7/node/%s.json';
 
   const PANOPOLY_GITHUB_REPO = 'git@github.com:panopoly/panopoly.git';
 
   protected $PANOPOLY_FEATURES = [
+    'panopoly_admin' => 'Panopoly Admin',
     'panopoly_core' => 'Panopoly Core',
     'panopoly_demo' => 'Panopoly Demo',
     'panopoly_images' => 'Panopoly Images',
-    'panopoly_media' => 'Panopoly Media',
     'panopoly_pages' => 'Panopoly Pages',
+    'panopoly_search' => 'Panopoly Search',
     'panopoly_test' => 'Panopoly Test',
     'panopoly_theme' => 'Panopoly Theme',
     'panopoly_users' => 'Panopoly Users',
@@ -46,14 +47,18 @@ class RoboFile extends RoboTasks {
     'WYSIWYG' => 'panopoly_wysiwyg',
   ];
 
-  protected $COMPOSER_PROFILE_REQUIREMENTS = [
-    "cweagans/composer-patches" => "^1.6.5",
-    "drupal/core" => "^8.6.16",
-    "drupal/features" => "~3.7",
-  ];
-
   protected $SUBTREE_MERGE_COMMITS = [
-    'panopoly_images' => 'e48a65f',
+    'panopoly_admin' => 'a6ad2cb',
+    'panopoly_core' => 'b646732',
+    'panopoly_images' => '5b88d30',
+    'panopoly_magic' => '9613823',
+    'panopoly_pages' => '40b9718',
+    'panopoly_search' => '04d6d32',
+    'panopoly_test' => 'bc11198',
+    'panopoly_theme' => 'a4956a6',
+    'panopoly_users' => '309a024',
+    'panopoly_widgets' => 'ebe792c',
+    'panopoly_wysiwyg' => 'a3d1146',
   ];
 
   /**
@@ -225,7 +230,7 @@ class RoboFile extends RoboTasks {
 
       $this->say("Checking <info>{$panopoly_feature}</info>...");
       $process = $this->runDrush("features-diff {$panopoly_feature}");
-      if ($process->getExitCode() != 0 || strpos($process->getOutput(), "Active config matches stored config") === FALSE) {
+      if ($process->getExitCode() != 0 || strpos($process->getOutput(), "Feature is in its default state") === FALSE) {
         $this->say("*** <error>OVERRIDDEN</error> ***");
         echo $process->getOutput() . $process->getErrorOutput();
         $overridden = TRUE;
@@ -259,51 +264,10 @@ EOF;
   }
 
   /**
-   * Builds the top-level composer.json file from the panopoly_* features.
-   *
-   * @todo This should probably be a custom task
-   */
-  public function buildComposerJson() {
-    $package_index = [];
-
-    foreach ($this->COMPOSER_PROFILE_REQUIREMENTS as $package => $version) {
-      $package_index[$package]['profile'] = $version;
-    }
-    foreach ($this->getPanopolyFeatures() as $module) {
-      $module_composer_json = $this->readJsonFile(__DIR__ . "/modules/panopoly/{$module}/composer.json");
-      foreach ($module_composer_json['require'] as $package => $version) {
-        $package_index[$package][$module] = $version;
-      }
-    }
-
-    $main_composer_json = $this->readJsonFile(__DIR__ . "/composer.json");
-    $main_composer_json['require'] = $this->COMPOSER_PROFILE_REQUIREMENTS;
-    foreach ($package_index as $package => $versions) {
-      // Skip any of the Panopoly modules.
-      list ($vendor, $short_package_name) = explode('/', $package);
-      if ($vendor == 'drupal' && in_array($short_package_name, $this->getPanopolyFeatures())) {
-        continue;
-      }
-
-      $unique_versions = array_unique($versions);
-      if (count($unique_versions) > 1) {
-        throw new \Exception("Panopoly sub-modules have dependencies with non-matching requirements for {$package} package: " . print_r($versions, TRUE));
-      }
-
-      $main_composer_json['require'][$package] = reset($unique_versions);
-    }
-
-    ksort($main_composer_json['require']);
-
-    $this->writeComposerJsonFile(__DIR__ . '/composer.json', $main_composer_json);
-  }
-
-  /**
    * Builds both the top-level drupal-org.make and composer.json.
    */
   public function build() {
     $this->buildDrupalOrgMake();
-    $this->buildComposerJson();
   }
 
   /**
@@ -321,6 +285,8 @@ EOF;
 
     /** @var \Robo\Collection\CollectionBuilder|$this $collection */
     $collection = $this->collectionBuilder();
+
+    // @todo [D7] need to treat panopoly_demo special
 
     foreach ($this->getPanopolyFeatures() as $panopoly_feature) {
       $collection->addCode(function () use ($panopoly_feature) {
@@ -672,6 +638,8 @@ EOF;
       $panopoly_feature_release_path = "release/{$panopoly_feature}";
       $panopoly_feature_source_path = "modules/panopoly/{$panopoly_feature}";
 
+      // @todo [D7] We need to handle panopoly_demo special!
+
       // @todo Probably should be a custom Task
       $collection->addCode(function () use ($old_version, $new_version, $branch, $panopoly_feature_name, $panopoly_feature_release_path, $panopoly_feature_source_path) {
         $drush_rn = $this->runDrush("rn {$old_version} {$branch} --changelog", $panopoly_feature_release_path)->getOutput();
@@ -734,6 +702,7 @@ EOF;
     $collection->addTask($this->checkoutManyreposForRelease($branch));
     foreach ($this->getPanopolyFeatures() as $panopoly_feature) {
       $panopoly_feature_release_path = "release/{$panopoly_feature}";
+      // @todo [D7] We need to handle panopoly_demo special!
       $collection->taskExecStack()
         ->exec("git -C {$panopoly_feature_release_path} tag {$new_version}")
         ->exec("git -C {$panopoly_feature_release_path} push --tags");
