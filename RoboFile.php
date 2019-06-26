@@ -286,9 +286,14 @@ EOF;
     /** @var \Robo\Collection\CollectionBuilder|$this $collection */
     $collection = $this->collectionBuilder();
 
+    // Get a list of panopoly_* features with panopoly_demo removed.
+    $panopoly_features_names = $this->getPanopolyFeaturesNames();
+    unset($panopoly_features_names['panopoly_demo']);
+    $panopoly_features = array_keys($panopoly_features_names);
+
     // @todo [D7] need to treat panopoly_demo special
 
-    foreach ($this->getPanopolyFeatures() as $panopoly_feature) {
+    foreach ($panopoly_features as $panopoly_feature) {
       $collection->addCode(function () use ($panopoly_feature) {
         $this->say("Fetching from individual repo for {$panopoly_feature}...");
       });
@@ -305,7 +310,7 @@ EOF;
 
     $collection->completion($this->taskExec("git checkout {$branch}"));
 
-    foreach ($this->getPanopolyFeatures() as $panopoly_feature) {
+    foreach ($panopoly_features as $panopoly_feature) {
       $collection->addCode(function () use ($panopoly_feature) {
         $this->say("Performing subtree split for {$panopoly_feature}...");
       });
@@ -336,7 +341,7 @@ EOF;
     }
 
     if ($opts['push']) {
-      foreach ($this->getPanopolyFeatures() as $panopoly_feature) {
+      foreach ($panopoly_features as $panopoly_feature) {
         $collection->addCode(function () use ($panopoly_feature) {
           $this->say("Pushing {$panopoly_feature}...");
         });
