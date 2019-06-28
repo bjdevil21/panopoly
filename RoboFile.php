@@ -264,10 +264,44 @@ EOF;
   }
 
   /**
-   * Builds both the top-level drupal-org.make and composer.json.
+   * Builds the profile's .make file to pull in modules, themes and libraries.
    */
-  public function build() {
-    $this->buildDrupalOrgMake();
+  public function buildDependencies() {
+    /** @var $this|\Robo\Collection\CollectionBuilder $collection */
+    $collection = $this->collectionBuilder();
+
+    $collection->addCode([$this, 'buildDrupalOrgMake']);
+    $collection->taskExec("drush make drupal-org.make -y --no-core --contrib-destination=.");
+
+    return $collection;
+  }
+
+  /**
+   * Builds a Drupal code base with Panopoly in it at the target path.
+   *
+   * @param string $target_path
+   *   The path to build the Drupal site.
+   *
+   * @return \Robo\Collection\CollectionBuilder
+   *
+   * @throws \Exception
+   */
+  public function buildSite($target_path) {
+    if (file_exists($target_path)) {
+      throw new \Exception("{$target_path} already exists");
+    }
+
+    /** @var $this|\Robo\Collection\CollectionBuilder $collection */
+    $collection = $this->collectionBuilder();
+
+    $collection->addTask($this->buildDependencies());
+
+    $drupal_org_make = __DIR__ . '/drupal-org.make';
+
+    $collection->taskExec("drush make drupal-org-core.make {$target_path} -y");
+    $collection->taskMirrorDir([ __DIR__ => "{$target_path}/profiles/panopoly"]);
+
+    return $collection;
   }
 
   /**
