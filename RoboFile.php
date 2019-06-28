@@ -420,7 +420,7 @@ EOF;
             }
           }
           if (!$component) {
-            $component = $this->PANOPOLY_COMPONENT_MAP[$node['field_issue_component']] ?? NULL;
+            $component = isset($this->PANOPOLY_COMPONENT_MAP[$node['field_issue_component']]) ? $this->PANOPOLY_COMPONENT_MAP[$node['field_issue_component']] : NULL;
           }
           if (!$component) {
             throw new \Exception("Unable to identify project for patch based on name '{$file['name']}' or issue component '{$node['field_issue_component']}'");
