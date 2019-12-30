@@ -105,10 +105,12 @@ projects[defaultcontent][patch][2946138] = https://www.drupal.org/files/issues/d
 projects[migrate][version] = "2.11"
 projects[migrate][type] = "module"
 projects[migrate][subdir] = "contrib"
+projects[migrate][patch][2928784] = https://www.drupal.org/files/issues/2018-03-12/mssql-functions-2928784-11.patch
 
 projects[migrate_extras][version] = "2.5"
 projects[migrate_extras][type] = "module"
 projects[migrate_extras][subdir] = "contrib"
+projects[migrate_extras][patch][3061747] = https://www.drupal.org/files/issues/2019-08-14/phpcs-fix-3061747-4.patch
 
 ; jQuery Update was moved to Panopoly Core, but is left in Panopoly Admin's
 ; .make file to retain a stable 1.x branch of Panopoly. See the following URL
