@@ -73,6 +73,7 @@ projects[transliteration][subdir] = contrib
 
 projects[date][version] = 2.10
 projects[date][subdir] = contrib
+projects[date][patch][2449261] = https://www.drupal.org/files/issues/2018-08-30/date-cannot_create_references_to_from_string_offsets-2449261-14.patch
 
 projects[entityreference][version] = 1.5
 projects[entityreference][subdir] = contrib
