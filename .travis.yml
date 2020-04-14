@@ -13,6 +13,9 @@ sudo: false
 services:
   - mysql
 
+addons:
+  chrome: stable
+
 php:
   - 5.6
 
@@ -74,13 +77,13 @@ env:
     # This is used to setup Xvfb.
     - DRUPAL_TI_BEHAT_SCREENSIZE_COLOR="1920x1080x24"
     # The version of selenium that should be used.
-    - DRUPAL_TI_BEHAT_SELENIUM_VERSION="2.47.1"
+    - DRUPAL_TI_BEHAT_SELENIUM_VERSION="4.0.0-alpha2"
     - DRUPAL_TI_BEHAT_DRIVER="selenium"
     # We use both chrome and firefox, but this makes chromedriver available.
     - DRUPAL_TI_BEHAT_BROWSER="chrome"
-    # Pin to Chrome 56.
-    - DRUPAL_TI_BEHAT_CHROME_URL="http://www.slimjetbrowser.com/chrome/lnx/chrome64_56.0.2924.87.deb"
-    - DRUPAL_TI_BEHAT_CHROMEDRIVER_VERSION="2.27"
+    # Use latest stable Chrome available with Travis-CI
+    - DRUPAL_TI_BEHAT_CHROME_URL=$(google-chrome-stable --version | sed -E 's/(^Google Chrome |\.[0-9]+ )//g')
+    - DRUPAL_TI_BEHAT_CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE")
 
     # PHPUnit specific commandline arguments.
     - DRUPAL_TI_PHPUNIT_ARGS=""
@@ -110,20 +113,21 @@ env:
     - UPGRADE=7.x-1.71
     - UPGRADE=7.x-1.70
     - UPGRADE=7.x-1.69
-    - UPGRADE=7.x-1.68
-    - UPGRADE=7.x-1.67
-    - UPGRADE=7.x-1.66
-    - UPGRADE=7.x-1.65
-    - UPGRADE=7.x-1.64
-    - UPGRADE=7.x-1.63
-    - UPGRADE=7.x-1.62
-    - UPGRADE=7.x-1.61
-    - UPGRADE=7.x-1.60
-    - UPGRADE=7.x-1.59
-    - UPGRADE=7.x-1.58
-    - UPGRADE=7.x-1.57
-    - UPGRADE=7.x-1.56
-    - UPGRADE=7.x-1.55
+#    - UPGRADE=7.x-1.68
+#    - UPGRADE=7.x-1.67
+#    - UPGRADE=7.x-1.66
+#    - UPGRADE=7.x-1.65
+#    - UPGRADE=7.x-1.64
+#    - UPGRADE=7.x-1.63
+#    - UPGRADE=7.x-1.62
+#    - UPGRADE=7.x-1.61
+#    - UPGRADE=7.x-1.60
+#    - UPGRADE=7.x-1.59
+#    - UPGRADE=7.x-1.58
+#    - UPGRADE=7.x-1.57
+#    - UPGRADE=7.x-1.56
+#    - UPGRADE=7.x-1.55
+#    - UPGRADE=7.x-1.55
 
 # Cache Composer & Drush directories.
 cache:
@@ -159,14 +163,14 @@ branches:
   except:
     - 8.x-2.x
 
-notifications:
-  email:
-    recipients:
-      - panopoly-ci@googlegroups.com
-    on_success: always
-    on_failure: always
-  irc:
-    channels:
-      - "chat.freenode.net#panopoly"
-    on_success: always
-    on_failure: always
+#notifications:
+#  email:
+#    recipients:
+#      - panopoly-ci@googlegroups.com
+#    on_success: always
+#    on_failure: always
+#  irc:
+#    channels:
+#      - "chat.freenode.net#panopoly"
+#    on_success: always
+#    on_failure: always

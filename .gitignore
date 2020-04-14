@@ -8,3 +8,4 @@ build.properties
 /vendor/
 /release/
 /robo.yml
+.idea/*
