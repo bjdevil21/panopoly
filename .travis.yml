@@ -61,7 +61,7 @@ env:
     # Note: Do not add a trailing slash here.
     - DRUPAL_TI_WEBSERVER_URL="http://127.0.0.1"
     # Note: http://cgit.drupalcode.org/panopoly_test/tree/behat/behat.travis.yml depends on that port.
-    - DRUPAL_TI_WEBSERVER_PORT="8888"
+    - DRUPAL_TI_WEBSERVER_PORT="4444"
 
     # Simpletest specific commandline arguments, the DRUPAL_TI_SIMPLETEST_GROUP is appended at the end.
     - DRUPAL_TI_SIMPLETEST_ARGS="--verbose --color --concurrency 4 --url $DRUPAL_TI_WEBSERVER_URL:$DRUPAL_TI_WEBSERVER_PORT"
