@@ -36,8 +36,8 @@ default:
               - "--no-sandbox"
           version: ANY
       javascript_session: selenium2
-      #base_url: http://mydrupalsite.com
-      #files_path: './profiles/panopoly/modules/panopoly/panopoly_test/tests'
+      base_url: http://127.0.0.1:8888
+      files_path: './profiles/panopoly/modules/panopoly/panopoly_test/tests'
     Drupal\DrupalExtension:
       blackbox: ~
       drush:
