@@ -85,7 +85,7 @@ function panopoly_build_distribution() {
 	fi
 
 	# Download an old version to test upgrading from.
-	if [[ "$UPGRADE" == '7.x-1.72' ]]
+	if [[ "$UPGRADE" != none ]]
 	then
 		(
 #			cd "$DRUPAL_TI_DRUPAL_BASE"
