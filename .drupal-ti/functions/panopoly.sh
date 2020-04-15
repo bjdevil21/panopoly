@@ -95,21 +95,21 @@ function panopoly_build_distribution() {
             wget https://github.com/bjdevil21/panopoly/archive/7.x-1.x.zip
             unzip 7.x-1.x.zip
             mv panopoly-7.x-1.x panopoly-${UPGRADE}
-            sleep 2
-            pwd
+            rm 7.x-1.x.zip
+            panopoly_header Currently in $(pwd) - Contents:
             ls -las
-            echo "panopoly-" ${UPGRADE}
-            sleep 30
-            panopoly_header "$TRAVIS_BUILD_DIR"
+            sleep 1
             cd "$TRAVIS_BUILD_DIR"
+            panopoly_header Going to ${TRAVIS_BUILD_DIR} - Contents:
             ls -las
-            sleep 10
             cd ../
+            panopoly_header Moved Up a level to $(pwd) - Contents:
             ls -las
-            panopoly_header Up a level
-            sleep 10
-            cp -pr panopoly-${UPGRADE}/* ${TRAVIS_BUILD_DIR}/../drupal-7/drupal/profiles/panopoly/
+            sleep 1
             cd ${DRUPAL_TI_DRUPAL_BASE}
+            panopoly_header Moved to ${DRUPAL_TI_DRUPAL_BASE} - Contents:
+            ls -las
+            cp -pr panopoly-${UPGRADE}/* ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly/
 		)
 	fi
 }
