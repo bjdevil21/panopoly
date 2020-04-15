@@ -69,15 +69,23 @@ function panopoly_build_distribution() {
 	mkdir -p sites/default/private/temp
 
 	# Verify that all the .make files will work on Drupal.org.
-	if [[ "$UPGRADE" == none ]]
+#	if [[ "$UPGRADE" == none ]]
+#	then
+#		panopoly_header Verifying .make file -- ${UPGRADE} == none
+#		drush verify-makefile profiles/panopoly/drupal-org.make
+#		find profiles/panopoly/modules -name \*.make -print0 | xargs -0 -n1 drush verify-makefile
+#	fi
+
+		# Verify that all the .make files will work on Drupal.org.
+	if [[ "$UPGRADE" != none ]]
 	then
-		panopoly_header Verifying .make file
+		panopoly_header Verifying .make file -- ${UPGRADE}
 		drush verify-makefile profiles/panopoly/drupal-org.make
 		find profiles/panopoly/modules -name \*.make -print0 | xargs -0 -n1 drush verify-makefile
 	fi
 
 	# Download an old version to test upgrading from.
-	if [[ "$UPGRADE" != none ]]
+	if [[ "$UPGRADE" == 'bjdevil21' ]]
 	then
 		(
 #			cd "$DRUPAL_TI_DRUPAL_BASE"
