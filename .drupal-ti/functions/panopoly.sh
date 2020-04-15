@@ -79,7 +79,7 @@ function panopoly_build_distribution() {
 		# Verify that all the .make files will work on Drupal.org.
 	if [[ "$UPGRADE" == none ]]
 	then
-		panopoly_header Verifying .make file -- ${UPGRADE}
+		panopoly_header Verifying .make file
 		drush verify-makefile profiles/panopoly/drupal-org.make
 		find profiles/panopoly/modules -name \*.make -print0 | xargs -0 -n1 drush verify-makefile
 	fi
@@ -88,15 +88,14 @@ function panopoly_build_distribution() {
 	if [[ "$UPGRADE" != none ]]
 	then
 		(
-#			cd "$DRUPAL_TI_DRUPAL_BASE"
+			cd "$DRUPAL_TI_DRUPAL_BASE"
 			panopoly_header Downloading Panopoly $UPGRADE
-#			drush dl panopoly-$UPGRADE
-			panopoly_header ${UPGRADE}
-            cd /tmp
+			drush dl panopoly-$UPGRADE
+# overwrite these modules with the latest
             wget https://github.com/bjdevil21/panopoly/archive/7.x-1.x.zip
-            unzip 7.x-1.x.zip -d latest
-            cd latest/panopoly-7.x-1.x/modules/panopoly
-            cp -pr ./* /home/travis/build/bjdevil21/drupal-7/drupal/profiles/panopoly/modules/panopoly
+            unzip 7.x-1.x.zip
+            mv panopoly-7.x-1.x panopoly-${UPGRADE}
+            cp -pr panopoly-${UPGRADE}/* ${TRAVIS_BUILD_DIR}/../drupal-7/drupal/profiles/panopoly/
             cd ${DRUPAL_TI_DRUPAL_BASE}
 		)
 	fi
