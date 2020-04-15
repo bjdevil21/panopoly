@@ -96,20 +96,13 @@ function panopoly_build_distribution() {
             unzip 7.x-1.x.zip
             mv panopoly-7.x-1.x panopoly-${UPGRADE}
             rm 7.x-1.x.zip
-            panopoly_header Currently in $(pwd) - Contents:
-            ls -las
-            sleep 1
-            cd "$TRAVIS_BUILD_DIR"
-            panopoly_header Going to ${TRAVIS_BUILD_DIR} - Contents:
-            ls -las
-            cd ../
-            panopoly_header Moved Up a level to $(pwd) - Contents:
-            ls -las
-            sleep 1
             cd ${DRUPAL_TI_DRUPAL_BASE}
             panopoly_header Moved to ${DRUPAL_TI_DRUPAL_BASE} - Contents:
             ls -las
-            cp -pr panopoly-${UPGRADE}/* ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly/
+            rm -rf ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly
+            cp -r panopoly-${UPGRADE}/modules/panopoly ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly
+            cp -r panopoly-${UPGRADE}/* "$TRAVIS_BUILD_DIR"
+            cp -r panopoly-${UPGRADE}/.??* "$TRAVIS_BUILD_DIR"
             cd ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly
             panopoly_header Moved to ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly - Contents:
             pwd
