@@ -15,12 +15,12 @@ default:
     Drupal\MinkExtension:
       goutte: ~
       selenium2:
-#        browser: chrome
+        browser: chrome
         wd_host: http://localhost:4444/wd/hub
         capabilities:
-#          browser: chrome
-#          browserName: chrome
-#          browserVersion: ANY
+          browser: chrome
+          browserName: chrome
+          browserVersion: ANY
           extra_capabilities:
             chromeOptions:
               w3c: false
@@ -40,10 +40,10 @@ default:
       #files_path: './profiles/panopoly/modules/panopoly/panopoly_test/tests'
     Drupal\DrupalExtension:
       blackbox: ~
-      #drush:
-      #  root: '/path/to/drupal/root'
-      #drupal:
-      #  drupal_root: '/path/to/drupal/root'
+      drush:
+        root: '/home/travis/build/bjdevil21/panopoly/drupal-7/drupal'
+      drupal:
+        drupal_root: '/home/travis/build/bjdevil21/panopoly/drupal-7/drupal'
       api_driver: 'drupal'
       # Look in the profile modules directory and pull in module subcontexts.
       subcontexts:
