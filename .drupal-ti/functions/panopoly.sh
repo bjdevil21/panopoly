@@ -110,6 +110,11 @@ function panopoly_build_distribution() {
             panopoly_header Moved to ${DRUPAL_TI_DRUPAL_BASE} - Contents:
             ls -las
             cp -pr panopoly-${UPGRADE}/* ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly/
+            cd ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly
+            panopoly_header Moved to ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly - Contents:
+            pwd
+            ls -las
+            sleep 60
 		)
 	fi
 }
