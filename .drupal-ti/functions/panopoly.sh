@@ -96,7 +96,7 @@ function panopoly_build_distribution() {
             wget https://github.com/bjdevil21/panopoly/archive/7.x-1.x.zip
             unzip 7.x-1.x.zip -d latest
             cd latest/panopoly-7.x-1.x/modules/panopoly
-            cp -pr ./* "$DRUPAL_TI_DRUPAL_BASE"/profiles/panopoly/modules/panopoly
+            cp -pr ./* /home/travis/build/bjdevil21/drupal-7/drupal/profiles/panopoly/modules/panopoly
             cd ${DRUPAL_TI_DRUPAL_BASE}
 		)
 	fi
