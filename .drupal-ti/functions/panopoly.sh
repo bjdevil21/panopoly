@@ -82,6 +82,8 @@ function panopoly_build_distribution() {
 		panopoly_header Verifying .make file
 		drush verify-makefile profiles/panopoly/drupal-org.make
 		find profiles/panopoly/modules -name \*.make -print0 | xargs -0 -n1 drush verify-makefile
+		ls -las ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly
+		ls -las "$TRAVIS_BUILD_DIR"
 	fi
 
 	# Download an old version to test upgrading from.
@@ -91,6 +93,9 @@ function panopoly_build_distribution() {
 			cd "$DRUPAL_TI_DRUPAL_BASE"
 			panopoly_header Downloading Panopoly $UPGRADE
 			drush dl panopoly-$UPGRADE
+	    	ls -las ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly
+    		ls -las "$TRAVIS_BUILD_DIR"
+    		panopoly_header part 2
 # overwrite these modules with the latest
             wget https://github.com/bjdevil21/panopoly/archive/7.x-1.x.zip
             unzip 7.x-1.x.zip
@@ -100,10 +105,10 @@ function panopoly_build_distribution() {
             cd ${DRUPAL_TI_DRUPAL_BASE}
             panopoly_header Moved to ${DRUPAL_TI_DRUPAL_BASE} - Contents:
             ls -las
-            #rm -rf ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly
-            #cp -r panopoly-${UPGRADE}/modules/panopoly ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly
-            cp -r panopoly-${UPGRADE}/* "$TRAVIS_BUILD_DIR"
-            cp -r panopoly-${UPGRADE}/.??* "$TRAVIS_BUILD_DIR"
+            cp -r panopoly-${UPGRADE}/modules/panopoly/* ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly/
+            cp -r panopoly-${UPGRADE}/modules/panopoly/.??* "$TRAVIS_BUILD_DIR"/profiles/panopoly/
+            cp -r panopoly-${UPGRADE}/* "$TRAVIS_BUILD_DIR"/profiles/panopoly
+            cp -r panopoly-${UPGRADE}/.??* "$TRAVIS_BUILD_DIR"/profiles/panopoly
             cd ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly
             panopoly_header Moved to ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly - Contents:
             pwd
