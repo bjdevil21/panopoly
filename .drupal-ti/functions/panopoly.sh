@@ -80,9 +80,15 @@ function panopoly_build_distribution() {
 	if [[ "$UPGRADE" != none ]]
 	then
 		(
-			cd "$DRUPAL_TI_DRUPAL_BASE"
+#			cd "$DRUPAL_TI_DRUPAL_BASE"
 			panopoly_header Downloading Panopoly $UPGRADE
-			drush dl panopoly-$UPGRADE
+#			drush dl panopoly-$UPGRADE
+            cd /tmp
+            wget https://github.com/bjdevil21/panopoly/archive/7.x-1.x.zip
+            unzip 7.x-1.x.zip -d latest
+            cd latest/panopoly-7.x-1.x/modules/panopoly
+            cp -pr ./* ${DRUPAL_TI_DRUPAL_BASE}/profiles/panopoly/modules/
+            cd ${DRUPAL_TI_DRUPAL_BASE}
 		)
 	fi
 }
