@@ -96,11 +96,12 @@ function panopoly_build_distribution() {
             unzip 7.x-1.x.zip
             mv panopoly-7.x-1.x panopoly-${UPGRADE}
             rm 7.x-1.x.zip
+            ls -las panopoly-${UPGRADE}
             cd ${DRUPAL_TI_DRUPAL_BASE}
             panopoly_header Moved to ${DRUPAL_TI_DRUPAL_BASE} - Contents:
             ls -las
-            rm -rf ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly
-            cp -r panopoly-${UPGRADE}/modules/panopoly ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly
+            #rm -rf ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly
+            #cp -r panopoly-${UPGRADE}/modules/panopoly ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly
             cp -r panopoly-${UPGRADE}/* "$TRAVIS_BUILD_DIR"
             cp -r panopoly-${UPGRADE}/.??* "$TRAVIS_BUILD_DIR"
             cd ${DRUPAL_TI_DRUPAL_DIR}/profiles/panopoly
