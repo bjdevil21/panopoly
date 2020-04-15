@@ -15,7 +15,9 @@
     },
     "require-dev": {
         "consolidation/robo": "^1.4",
-        "drupal/drupal-extension": "^4.0"
+        "spomky-labs/otphp": "^9.0",
+        "drupal/drupal-extension": "^4.0",
+        "symfony/yaml": "~3.4"
     },
     "replace": {
         "drupal/panopoly_core": "self.version",
