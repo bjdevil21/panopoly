@@ -95,6 +95,19 @@ function panopoly_build_distribution() {
             wget https://github.com/bjdevil21/panopoly/archive/7.x-1.x.zip
             unzip 7.x-1.x.zip
             mv panopoly-7.x-1.x panopoly-${UPGRADE}
+            sleep 2
+            pwd
+            ls -las
+            echo "panopoly-" ${UPGRADE}
+            sleep 30
+            panopoly_header "$TRAVIS_BUILD_DIR"
+            cd "$TRAVIS_BUILD_DIR"
+            ls -las
+            sleep 10
+            cd ../
+            ls -las
+            panopoly_header Up a level
+            sleep 10
             cp -pr panopoly-${UPGRADE}/* ${TRAVIS_BUILD_DIR}/../drupal-7/drupal/profiles/panopoly/
             cd ${DRUPAL_TI_DRUPAL_BASE}
 		)
